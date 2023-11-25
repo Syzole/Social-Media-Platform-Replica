@@ -1,0 +1,16 @@
+html
+  head
+    title Sign Up
+    <link rel="stylesheet" href="Sign.css">
+  body
+    h1 Sign Up
+    form(action="/signup", method="post")
+      label(for="username") Username:
+      input(type="text", id="username", name="username", required)
+      br
+      label(for="password") Password:
+      input(type="text", id="password", name="password", required)
+      br
+      input(type="submit", value="Sign Up")
+    br
+    a(href="/") Already have an account? Log in here.
