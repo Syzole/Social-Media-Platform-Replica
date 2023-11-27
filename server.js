@@ -25,19 +25,14 @@ let Art = mongoose.model("Art",artSchema);
 let user = mongoose.model("Users",userSchema);
 
 async function main() {
-    try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/final');
-        console.log('Connected to MongoDB');
+	await mongoose.connect('mongodb://127.0.0.1:27017/final');
+	console.log('Connected to MongoDB');
 
-        await loadData();
-		console.log("data loaded");
+	await loadData();
+	console.log("data loaded");
 
-		app.listen(3000);
-		console.log("Server is chilling at http://localhost:3000/");
-    } 
-	catch (error) {
-        console.error('Ayo we got some kind of problem:' + error.message);
-    }
+	app.listen(3000);
+	console.log("Server is chilling at http://localhost:3000/");
 }
 
 main().catch(err => console.log(err));
@@ -60,16 +55,23 @@ app.get('/signup', function(req, res) {
     res.render('Sign.pug');
 });
 
-app.post('/users',function(req,res){
-	//TODO: fix this
-	let existingUser = Users.findOne({ Poster: artData.Poster });
-	if(!existingUser){
+app.post('/users', async function(req, res) {
+	let { userName, password } = req.body;
 
-	}
-	else{
-		
+	// Check if a user with the given userName already exists
+	let existingUser = await user.findOne({ userName: userName });
+
+	if (!existingUser) {
+		//user does not existed
+		const newUser = new user({ userName, password });
+		await newUser.save();
+		res.status(201).send();
+	} 
+	else {
+		res.status(409).send();
 	}
 });
+
 
 
 async function loadData(){
