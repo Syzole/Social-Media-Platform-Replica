@@ -10,23 +10,19 @@ function init() {
         let password = passwordBox.value;
 
         // Make a POST request to the server
-        xhttp.open("POST", "/users", true);
+        xhttp.open("POST", "/users", false);
         xhttp.setRequestHeader("Content-Type", "application/json");
 
-        // Set up the callback function to handle the server's response
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState === 4) {
                 if (xhttp.status === 201) {
                     // User successfully registered
-                    alert("Registration successful! You can now log in.");
-                    // Optionally, you can redirect the user to the login page
-                    // window.location.href = "/";
-                } else if (xhttp.status === 409) {
-                    // User already exists
+                    alert("Registration successful! Moving to login page.");
+                    //move to login
+                    window.location.href = "/";
+                } 
+                else {
                     alert("Username already exists. Please choose a different username.");
-                } else {
-                    // Handle other response statuses as needed
-                    alert("An error occurred during registration.");
                 }
             }
         };

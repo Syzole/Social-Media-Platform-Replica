@@ -7,8 +7,12 @@ app.use(express.static('public'));
 app.use(express.json());
 
 const userSchema = new mongoose.Schema({
-	userName: String,
-	password: String
+    userName: String,
+    password: String,
+    following: {
+        type: Object,
+        default: {}
+    }
 });
 
 const artSchema = new mongoose.Schema({
@@ -56,14 +60,14 @@ app.get('/signup', function(req, res) {
 });
 
 app.post('/users', async function(req, res) {
-	let { userName, password } = req.body;
-
+	let response = req.body;
+	console.log(response);
 	// Check if a user with the given userName already exists
 	let existingUser = await user.findOne({ userName: userName });
 
 	if (!existingUser) {
 		//user does not existed
-		let newUser = new user({ userName, password });
+		let newUser = new user(response);
 		await newUser.save();
 		res.status(201).send();
 	} 
