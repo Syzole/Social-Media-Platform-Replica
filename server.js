@@ -74,22 +74,5 @@ app.post('/users', async function(req, res) {
 
 
 
-async function loadData(){
-	let jsonString = fs.readFileSync("gallery.json", "utf8");
-    let jsonData = JSON.parse(jsonString);
 
-	for (let i = 0; i < jsonData.length; i++) {
-		let artData = jsonData[i];	
-		let existingArtwork = await Art.findOne({ Poster: artData.Poster });
-		console.log(existingArtwork);
-		if (!existingArtwork) {
-			let artInstance = new Art(artData);
-			await artInstance.save();
-			//console.log("Artwork added:", artData.Title);
-		}
-		else{
-			//console.log(artData.Title + " Is a dupe")
-		}
-	}
-}
 
