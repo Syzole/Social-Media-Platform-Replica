@@ -32,7 +32,6 @@ async function main() {
 	await mongoose.connect('mongodb://127.0.0.1:27017/final');
 	console.log('Connected to MongoDB');
 
-	await loadData();
 	console.log("data loaded");
 
 	app.listen(3000);
@@ -61,9 +60,8 @@ app.get('/signup', function(req, res) {
 
 app.post('/users', async function(req, res) {
 	let response = req.body;
-	console.log(response);
 	// Check if a user with the given userName already exists
-	let existingUser = await user.findOne({ userName: userName });
+	let existingUser = await user.findOne({ userName: response.userName });
 
 	if (!existingUser) {
 		//user does not existed

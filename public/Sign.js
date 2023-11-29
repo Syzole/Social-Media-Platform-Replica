@@ -28,6 +28,10 @@ function init() {
         };
 
         // Send the user data to the server
-        xhttp.send(JSON.stringify({ userName, password }));
+        let data = {
+            "userName":userName,
+            "password":password
+        }
+        xhttp.send(JSON.stringify(data));
     });
 }
