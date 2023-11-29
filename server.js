@@ -81,7 +81,7 @@ async function loadData(){
 	for (let i = 0; i < jsonData.length; i++) {
 		let artData = jsonData[i];	
 		let existingArtwork = await Art.findOne({ Poster: artData.Poster });
-
+		console.log(existingArtwork);
 		if (!existingArtwork) {
 			let artInstance = new Art(artData);
 			await artInstance.save();
