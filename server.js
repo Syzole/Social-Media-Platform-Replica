@@ -63,7 +63,7 @@ app.post('/users', async function(req, res) {
 
 	if (!existingUser) {
 		//user does not existed
-		const newUser = new user({ userName, password });
+		let newUser = new user({ userName, password });
 		await newUser.save();
 		res.status(201).send();
 	} 
