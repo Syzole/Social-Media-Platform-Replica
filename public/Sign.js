@@ -9,29 +9,36 @@ function init() {
         let userName = userNameBox.value;
         let password = passwordBox.value;
 
-        // Make a POST request to the server
-        xhttp.open("POST", "/users", false);
-        xhttp.setRequestHeader("Content-Type", "application/json");
-
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState === 4) {
-                if (xhttp.status === 201) {
-                    // User successfully registered
-                    alert("Registration successful! Moving to login page.");
-                    //move to login
-                    window.location.href = "/";
-                } 
-                else {
-                    alert("Username already exists. Please choose a different username.");
-                }
-            }
-        };
-
-        // Send the user data to the server
-        let data = {
-            "userName":userName,
-            "password":password
+        if(!userName||!password){
+            alert("Please enter a username or password.");
         }
-        xhttp.send(JSON.stringify(data));
+
+        else{
+            // Make a POST request to the server
+            xhttp.open("POST", "/users", false);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState === 4) {
+                    if (xhttp.status === 201) {
+                        // User successfully registered
+                        alert("Registration successful! Moving to login page.");
+                        //move to login
+                        window.location.href = "/";
+                    } 
+                    else {
+                        alert("Username already exists. Please choose a different username.");
+                    }
+                }
+            };
+
+            // Send the user data to the server
+            let data = {
+                "userName":userName,
+                "password":password
+            }
+            xhttp.send(JSON.stringify(data));
+        }
     });
+    
 }
