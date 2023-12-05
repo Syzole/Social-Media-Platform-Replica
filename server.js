@@ -6,9 +6,11 @@ let app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-// app.use(session({
-	
-// }));
+app.use(session({
+	secret: 'some super secret here like its so secret yall can never know',
+	resave: true,
+	saveUninitialized: true
+}));
 
 const userSchema = new mongoose.Schema({
     userName: String,
@@ -60,6 +62,27 @@ app.get('/', function(req, res) {
 
 app.get('/signup', function(req, res) {
     res.render('Sign.pug');
+});
+
+app.post('/login', async function(req, res) {
+	let response = req.body;
+	//check if user is real
+	let existingUser = await user.findOne({ userName: response.userName });
+
+	if (!existingUser) {
+		//no user
+		res.status(401).send();
+	} 
+	else {
+		if (existingUser.password === response.password) {
+			//password is right
+			res.status(200).send();
+		} 
+		else {
+			//password is not right
+			res.status(401).send();
+		}
+	}
 });
 
 
