@@ -1,24 +1,20 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="Login.css">
-</head>
-<body>
-    <h1>Login Page</h1>
+html
+  head
+    title Login Page
+    link(rel="stylesheet", href="Login.css")
+    script(src="Login.js")
+  body(onload="init()")
+    h1 Login Page
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+    label(for="username") Username:
+    input(type="text", id="username", name="username", required)
 
-    <br>
+    br
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    label(for="password") Password:
+    input(type="password", id="password", name="password", required)
 
-    <br>
+    br
 
-    <button type="button"  id="login">Login</button>
-    <a href="/signup">No account? Sign Up here!</a>
-
-</body>
-</html>
+    button(type="button", id="login") Login
+    a(href="/signup") No account? Sign Up here!

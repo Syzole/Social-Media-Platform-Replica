@@ -1,10 +1,14 @@
 const fs = require("fs");
 const mongoose = require('mongoose');
 const express = require('express');
-//const mc = require("mongodb").MongoClient;
+const session = require('express-session');
 let app = express();
 app.use(express.static('public'));
 app.use(express.json());
+
+// app.use(session({
+	
+// }));
 
 const userSchema = new mongoose.Schema({
     userName: String,
@@ -57,6 +61,8 @@ app.get('/', function(req, res) {
 app.get('/signup', function(req, res) {
     res.render('Sign.pug');
 });
+
+
 
 app.post('/users', async function(req, res) {
 	let response = req.body;
