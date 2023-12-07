@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
 	userName: String,
-	password: String
+	password: String,
+	isArtist: Boolean,
+	following: {
+        type: Object,
+        default: {}
+    }
 });
 
 const artSchema = new mongoose.Schema({

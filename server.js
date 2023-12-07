@@ -1,4 +1,3 @@
-const fs = require("fs");
 const mongoose = require('mongoose');
 const express = require('express');
 const session = require('express-session');
@@ -15,6 +14,7 @@ app.use(session({
 const userSchema = new mongoose.Schema({
     userName: String,
     password: String,
+	isArtist: Boolean,
     following: {
         type: Object,
         default: {}
@@ -76,6 +76,7 @@ app.post('/login', async function(req, res) {
 	else {
 		if (existingUser.password === response.password) {
 			//password is right
+			req.session.user = existingUser;
 			res.status(200).send();
 		} 
 		else {
@@ -85,10 +86,9 @@ app.post('/login', async function(req, res) {
 	}
 });
 
-
-
 app.post('/users', async function(req, res) {
 	let response = req.body;
+	response.isArtist = false;
 	// Check if a user with the given userName already exists
 	let existingUser = await user.findOne({ userName: response.userName });
 
@@ -100,6 +100,19 @@ app.post('/users', async function(req, res) {
 	} 
 	else {
 		res.status(409).send();
+	}
+});
+
+app.get('/home', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		//get all art and show it to the user
+		let allArt = await Art.find({});
+		let user = req.session.user;
+		res.render('Home.pug', { allArt: allArt, user: user });
 	}
 });
 
