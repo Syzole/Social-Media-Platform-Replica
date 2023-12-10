@@ -38,8 +38,6 @@ async function main() {
 	await mongoose.connect('mongodb://127.0.0.1:27017/final');
 	console.log('Connected to MongoDB');
 
-	console.log("data loaded");
-
 	app.listen(3000);
 	console.log("Server is chilling at http://localhost:3000/");
 }
@@ -112,8 +110,20 @@ app.get('/home', async function(req, res) {
 		//get all art and show it to the user
 		let allArt = await Art.find({});
 		let user = req.session.user;
-		console.log(allArt);
+		//console.log(allArt);
 		res.render('Home.pug', { allArt: allArt, user: user });
+	}
+});
+
+app.get('/userSettings', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		//show the user settings page with the user session info
+		let user = req.session.user;
+		res.render('UserSettings.pug', { user: user });
 	}
 });
 

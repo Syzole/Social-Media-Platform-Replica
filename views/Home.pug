@@ -6,11 +6,11 @@ html
   body(onload="init()")
     include Header.pug
     h1 All Art 
-
+    br
     for art in allArt 
       div(class="art")
         h2= art.Title
-        img(src=art.Poster)
+        img(src=art.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
         p= "Artist: " + art.Artist
         p= "Year: " + art.Year
         p= "Category: " + art.Category
