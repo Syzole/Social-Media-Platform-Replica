@@ -1,0 +1,56 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column; /* Add this line to place the art vertically */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+}
+
+.art {
+    background-color: #333;
+    border: 1px solid #555;
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+    margin-bottom: 20px; /* Add margin to separate each art piece */
+}
+
+h2 {
+    color: #ffffff;
+}
+
+.art img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.art p {
+    color: #cccccc;
+    margin-bottom: 10px;
+}
+  
+  
+button.like-button {
+background-color: #4caf50;
+color: #ffffff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+button.like-button:hover {
+background-color: #45a049;
+}
+  

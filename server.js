@@ -112,6 +112,7 @@ app.get('/home', async function(req, res) {
 		//get all art and show it to the user
 		let allArt = await Art.find({});
 		let user = req.session.user;
+		console.log(allArt);
 		res.render('Home.pug', { allArt: allArt, user: user });
 	}
 });
