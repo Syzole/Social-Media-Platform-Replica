@@ -36,7 +36,11 @@ body {
     background-color: transparent;
 }
 
-h1, h2 {
+h1{
+    color: #ffffff;
+}
+
+h2{
     color: #ffffff;
 }
 

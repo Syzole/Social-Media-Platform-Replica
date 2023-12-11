@@ -1,10 +1,22 @@
 link(rel="stylesheet", href="Header.css")
 
-nav
-  ul
-    li
-      a(href='/userSettings', type='text/html') User Settings
-    li
-      a(href='/following', type='text/html') Following Art Work 
-    li  
-      a(href='/home', type='text/html') Home
+if (user.isArtist)
+  nav
+    ul
+      li
+        a(href='/userSettings', type='text/html') User Settings
+      li
+        a(href='/following', type='text/html') Following Art Work 
+      li  
+        a(href='/home', type='text/html') Home
+      li
+        a(href='/upload', type='text/html') Upload Art
+else
+  nav
+    ul
+      li
+        a(href='/userSettings', type='text/html') User Settings
+      li
+        a(href='/following', type='text/html') Following Art Work 
+      li  
+        a(href='/home', type='text/html') Home
