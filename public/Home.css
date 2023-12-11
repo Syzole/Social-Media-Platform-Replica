@@ -1,62 +1,62 @@
+/* Home.css */
+
 body {
     font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column; /* Add this line to place the art vertically */
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
+.artGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .art {
-    background-color: #333;
-    border: 1px solid #555;
+    background-color: #000000;
     padding: 20px;
-    margin: 20px;
-    text-align: center;
-    margin-bottom: 20px; /* Add margin to separate each art piece */
+    border-radius: 5px;
+    text-align: left;
+}
+
+.art p {
+    background-color: transparent;
+}
+
+h1 {
+    color: #ffffff;
 }
 
 h2 {
     color: #ffffff;
 }
 
-.art img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.art p {
-    color: #cccccc;
-    margin-bottom: 10px;
-}
-  
-  
-button.like-button {
-background-color: #4caf50;
-color: #ffffff;
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s ease;
-}
-
-button.like-button:hover {
-background-color: #45a049;
-}
-
-p {
-    background-color: #e0e0e0;
+button {
+    background-color: #3498db;
+    color: #fff;
     padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-} 
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
