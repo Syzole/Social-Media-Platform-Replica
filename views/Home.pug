@@ -12,7 +12,8 @@ html
         div(class="art")
           div(class=`${artWork.Title} artInfo`, id=`${artWork.Title} artInfo`)
             h2= artWork.Title
-            img(src=artWork.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+            a(href=`/art/${artWork.Title}`, type="text/html")
+              img(src=artWork.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
             p
               | Artist: 
               a(href=`/artist/${artWork.Artist}`, type="text/html")= artWork.Artist

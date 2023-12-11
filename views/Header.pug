@@ -1,4 +1,5 @@
 link(rel="stylesheet", href="Header.css")
+script(src="Header.js")
 
 if (user.isArtist)
   nav
@@ -11,6 +12,11 @@ if (user.isArtist)
         a(href='/home', type='text/html') Home
       li
         a(href='/upload', type='text/html') Upload Art
+      li //button shoudld have an onclick method to search for the input 
+        input(type='text', id='searchBar', placeholder='Search')
+        //button(type='button', id='searchButton', onclick = searchForStuff()) Search
+        
+
 else
   nav
     ul
@@ -20,3 +26,7 @@ else
         a(href='/following', type='text/html') Following Art Work 
       li  
         a(href='/home', type='text/html') Home
+      li
+        input(type='text', id='searchBar', placeholder='Search')
+        //button(type='button', id='searchButton', onclick = searchForStuff()) Search
+        

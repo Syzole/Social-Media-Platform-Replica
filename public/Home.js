@@ -44,8 +44,13 @@ function updateUI(art, user){
 
     container.innerHTML = `
         <h2>${art.Title}</h2>
-        <img src="${art.Poster}" alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!"/>
-        <p>Artist: ${art.Artist}</p>
+        <a href="/art/${art.Title}" type="text/html">
+          <img src="${art.Poster}" alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!"/>
+        </a>
+        <p>
+          Artist: 
+          <a href="/artist/${art.Artist}" type="text/html">${art.Artist}</a>
+        </p>
     `;
     let buttonString;
     console.log('Art:', art);

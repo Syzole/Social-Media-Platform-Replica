@@ -186,12 +186,28 @@ app.post('/artist/:artist', async function(req, res) {
 	} 
 	else {
 		let artist = req.params.artist;
-		let allArt = await Art.find({ Artist: artist });
+		let allArtToArtist = await Art.find({ Artist: artist });
 		let user = req.session.user;
 		if(!artist){
 			res.status(401).send();
 		}
-		res.render('Artist.pug', { allArt: allArt, user: user });
+		res.render('Artist.pug', { allArtToArtist: allArtToArtist, user: user });
+	}
+});
+
+app.post('/search/:search', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		let search = req.params.search;
+		let searchedArt = await Art.find({ $or: [{ Title: search }, { Artist: search }, { Category: search }] });
+		let user = req.session.user;
+		if(!search){
+			res.status(401).send();
+		}
+		res.render('Search.pug', { searchedArt: searchedArt, user: user });
 	}
 });
 

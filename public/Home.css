@@ -32,6 +32,11 @@ body {
     border-radius: 5px;
 }
 
+.art img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 .art p {
     background-color: transparent;  
 }
