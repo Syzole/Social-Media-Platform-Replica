@@ -173,7 +173,8 @@ app.post('/updateLike', async function(req, res) {
 			//art exists, update likes by user
 			existingArt.isLikedBy = response.isLikedBy;
 			await existingArt.save();
-			res.status(200).send();
+			//console.log("sending "+existingArt)
+			res.status(200).json(existingArt);
 		}
 	}
 });

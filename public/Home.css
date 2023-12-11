@@ -64,3 +64,13 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.likedButton {
+    background-color: green;
+    color: white;
+  }
+  
+.unlikedButton {
+    background-color: red;
+    color: white;
+  }

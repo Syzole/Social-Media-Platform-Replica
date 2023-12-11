@@ -3,18 +3,19 @@ html
     title Home Page
     link(rel="stylesheet", href="Home.css")
     script(src="Home.js")
-  body(onload="init()")
+  body(onload=`init(${JSON.stringify(allArt)})`)
     include Header.pug
     h1 All Art 
     br
     div(class="artGrid")
       for artWork  in allArt 
         div(class="art")
-          h2= artWork.Title
-          img(src=artWork.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
-          p= "Artist: " + artWork.Artist
-          if (artWork.isLikedBy.includes(user.userName))
-            button(class="likedButton", onclick=`toggleLikedArt('${JSON.stringify(artWork)}', '${JSON.stringify(user)}')`) Unlike
-          else
-            button(class="unlikedButton", onclick=`toggleLikedArt('${JSON.stringify(artWork)}', '${JSON.stringify(user)}')`) Like
+          div(class=`${artWork.Title} artInfo`, id=`${artWork.Title} artInfo`)
+            h2= artWork.Title
+            img(src=artWork.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+            p= "Artist: " + artWork.Artist
+            if (artWork.isLikedBy.includes(user.userName))
+              button(class="likedButton", onclick=`toggleLikedArt('${JSON.stringify(artWork)}', '${JSON.stringify(user)}')`,id = `${artWork.Title} button`) Unlike
+            else
+              button(class="unlikedButton", onclick=`toggleLikedArt('${JSON.stringify(artWork)}', '${JSON.stringify(user)}')`,id = `${artWork.Title} button`) Like
   
