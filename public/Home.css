@@ -53,4 +53,10 @@ transition: background-color 0.3s ease;
 button.like-button:hover {
 background-color: #45a049;
 }
-  
+
+p {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+} 

@@ -44,13 +44,13 @@ async function main() {
 
 main().catch(err => console.log(err));
 
-app.use(function(req,res,next){
-	console.log(req.method);
-	console.log(req.url);
-	console.log(req.path);
-	console.log(req.get("Content-Type"));
-	next();
-});
+// app.use(function(req,res,next){
+// 	console.log(req.method);
+// 	console.log(req.url);
+// 	console.log(req.path);
+// 	console.log(req.get("Content-Type"));
+// 	next();
+// });
 
 
 
@@ -124,6 +124,28 @@ app.get('/userSettings', async function(req, res) {
 		//show the user settings page with the user session info
 		let user = req.session.user;
 		res.render('UserSettings.pug', { user: user });
+	}
+});
+
+app.post('/changeAccountType', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	}
+	else {
+		let response = req.body;
+		let existingUser = await user.findOne({ userName: response.userName });
+		if (!existingUser) {
+			//user does not existed
+			res.status(401).send();
+		} 
+		else {
+			//user exists, change the user type
+			existingUser.isArtist = !existingUser.isArtist;
+			await existingUser.save();
+			req.session.user = existingUser;
+			res.status(200).send();
+		}
 	}
 });
 
