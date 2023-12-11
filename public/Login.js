@@ -14,7 +14,7 @@ function init() {
         }
 
         else{
-            xhttp.open("POST", "/login", true);
+            xhttp.open("POST", "/login", false);
             xhttp.setRequestHeader("Content-Type", "application/json");
 
             xhttp.onreadystatechange = function() {
