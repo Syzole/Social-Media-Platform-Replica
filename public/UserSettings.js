@@ -5,7 +5,7 @@ function init() {
 }
 
 function changeAccountType(user) {
-    console.log("1:" + user.isArtist);
+    // console.log("1:" + user.isArtist);
     xhttp.open("POST", "/changeAccountType", false);
     xhttp.setRequestHeader("Content-Type", "application/json");
     //first change the type of the user
@@ -32,8 +32,8 @@ function changeAccountType(user) {
         }
     };
 
-    console.log("2:" + user.isArtist);
-    console.log(user);
+    // console.log("2:" + user.isArtist);
+    // console.log(user);
     //then send the request
     xhttp.send(JSON.stringify(user));
 }

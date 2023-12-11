@@ -5,7 +5,9 @@ function init() {
     
 }
 
-function toggleLikedArt(art,user){
+function toggleLikedArt(JSONart,JSONuser){
+    let art = JSON.parse(JSONart);
+    let user = JSON.parse(JSONuser);
     if(art.isLikedBy.includes(user.userName)){
         art.isLikedBy.pop(user.userName);
     }
@@ -17,7 +19,7 @@ function toggleLikedArt(art,user){
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4) {
             if (xhttp.status === 200) {
-                if(art.isLikedBy[user.userName]){
+                if(art.isLikedBy.includes(user.userName)){
                     alert("Liked art.");
                 }
                 else{
@@ -29,5 +31,6 @@ function toggleLikedArt(art,user){
             }
         }
     };
+    //TODO: update user liked art in database
     xhttp.send(JSON.stringify(art));
 }

@@ -8,13 +8,13 @@ html
     h1 All Art 
     br
     div(class="artGrid")
-      for art in allArt 
+      for artWork  in allArt 
         div(class="art")
-          h2= art.Title
-          img(src=art.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
-          p= "Artist: " + art.Artist
-          if (art.isLikedBy.includes(user.userName))
-            button(class="likedButton", onclick=`toggleLikedArt(${art,user})`) Unlike
+          h2= artWork.Title
+          img(src=artWork.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+          p= "Artist: " + artWork.Artist
+          if (artWork.isLikedBy.includes(user.userName))
+            button(class="likedButton", onclick=`toggleLikedArt('${JSON.stringify(artWork)}', '${JSON.stringify(user)}')`) Unlike
           else
-            button(class="unlikedButton", onclick=`toggleLikedArt(${art,user})`) Like
+            button(class="unlikedButton", onclick=`toggleLikedArt('${JSON.stringify(artWork)}', '${JSON.stringify(user)}')`) Like
   
