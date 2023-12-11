@@ -1,16 +1,7 @@
-/* Home.css */
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f2f2f2;
     margin: 0;
-    padding: 0;
-}
-
-.artGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
 }
 
 .container {
@@ -21,22 +12,31 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.artGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .art {
+    flex: 1;
     background-color: #000000;
-    padding: 20px;
+    padding: 50px;
     border-radius: 5px;
     text-align: left;
+}
+
+.art img {
+    width: 100%;
+    min-width: 300px;
+    border-radius: 5px;
 }
 
 .art p {
     background-color: transparent;
 }
 
-h1 {
-    color: #ffffff;
-}
-
-h2 {
+h1, h2 {
     color: #ffffff;
 }
 
