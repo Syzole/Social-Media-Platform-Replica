@@ -19,7 +19,15 @@ const artSchema = new mongoose.Schema({
 	Category: String,
 	Medium: String,
 	Description: String,
-	Poster: String
+	Poster: String,
+	isLikedBy:{
+		type: Array,
+		default: []
+	},
+	reviews:{
+		type: Object,
+		default: {}
+	}
 });
 
 let Art = mongoose.model("Art",artSchema);

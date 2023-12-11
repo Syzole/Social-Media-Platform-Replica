@@ -13,4 +13,8 @@ html
           h2= art.Title
           img(src=art.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
           p= "Artist: " + art.Artist
-          button(type="button", id=`${art.title} like`) Like
+          if (art.isLikedBy.includes(user.userName))
+            button(class="likedButton", onclick=`toggleLikedArt(${art,user})`) Unlike
+          else
+            button(class="unlikedButton", onclick=`toggleLikedArt(${art,user})`) Like
+  

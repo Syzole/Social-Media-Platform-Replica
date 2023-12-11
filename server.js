@@ -28,7 +28,15 @@ const artSchema = new mongoose.Schema({
 	Category: String,
 	Medium: String,
 	Description: String,
-	Poster: String
+	Poster: String,
+	isLikedBy:{
+		type: Array,
+		default: []
+	},
+	reviews:{
+		type: Object,
+		default: {}
+	}
 });
 
 let Art = mongoose.model("Art",artSchema);
@@ -144,6 +152,27 @@ app.post('/changeAccountType', async function(req, res) {
 			existingUser.isArtist = !existingUser.isArtist;
 			await existingUser.save();
 			req.session.user = existingUser;
+			res.status(200).send();
+		}
+	}
+});
+
+app.post('/updateLike', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		let response = req.body;
+		let existingArt = await Art.findOne({ Title: response.Title });
+		if (!existingArt) {
+			//art does not existed
+			res.status(401).send();
+		} 
+		else {
+			//art exists, update likes by user
+			existingArt.isLikedBy = response.isLikedBy;
+			await existingArt.save();
 			res.status(200).send();
 		}
 	}
