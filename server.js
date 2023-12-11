@@ -179,6 +179,22 @@ app.post('/updateLike', async function(req, res) {
 	}
 });
 
+app.post('/artist/:artist', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		let artist = req.params.artist;
+		let allArt = await Art.find({ Artist: artist });
+		let user = req.session.user;
+		if(!artist){
+			res.status(401).send();
+		}
+		res.render('Artist.pug', { allArt: allArt, user: user });
+	}
+});
+
 
 
 

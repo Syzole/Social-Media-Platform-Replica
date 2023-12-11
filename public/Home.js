@@ -5,9 +5,8 @@ function init(allArtJSON) {
     console.log(allArt);
 }
 
-function toggleLikedArt(JSONart,JSONuser){
-    let art = JSON.parse(JSONart);
-    let user = JSON.parse(JSONuser);
+function toggleLikedArt(art,user){
+    
     if(art.isLikedBy.includes(user.userName)){
         art.isLikedBy.pop(user.userName);
     }
@@ -43,17 +42,23 @@ function updateUI(art, user){
     let containerID = `${art.Title} artInfo`;
     let container = document.getElementById(containerID);
 
-    let buttonID = `${art.Title} button`;
-    let button = document.getElementById(buttonID);
+    container.innerHTML = `
+        <h2>${art.Title}</h2>
+        <img src="${art.Poster}" alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!"/>
+        <p>Artist: ${art.Artist}</p>
+    `;
+    let buttonString;
+    console.log('Art:', art);
+    console.log('User:', user);
 
-    if(art.isLikedBy.includes(user.userName)){
-        button.classList.remove('unlikedButton');
-        button.classList.add('likedButton');
-        button.textContent = 'Unlike';
+    if (art.isLikedBy.includes(user.userName)) {
+        buttonString = `
+            <button class="likedButton" onclick='toggleLikedArt(${JSON.stringify(art)}, ${JSON.stringify(user)})'>Unlike</button>
+        `;
+    } else {
+        buttonString = `
+            <button class="unlikedButton" onclick='toggleLikedArt(${JSON.stringify(art)}, ${JSON.stringify(user)})'>Like</button>
+        `;
     }
-    else{
-        button.classList.remove('likedButton');
-        button.classList.add('unlikedButton');
-        button.textContent = 'Like';
-    }
+    container.innerHTML += buttonString;
 }

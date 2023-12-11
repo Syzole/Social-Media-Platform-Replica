@@ -9,7 +9,11 @@ const userSchema = new mongoose.Schema({
 	following: {
         type: Object,
         default: {}
-    }
+    },
+	artCreated:{
+		type: Array,
+		default: []
+	},
 });
 
 const artSchema = new mongoose.Schema({
@@ -48,9 +52,32 @@ async function loadData(){
 	let jsonString = fs.readFileSync("gallery.json", "utf8");
     let jsonData = JSON.parse(jsonString);
 
-	for (let i = 0; i < jsonData.length; i++) {
-		let artData = jsonData[i];	
-        let artInstance = new Art(artData);
-        await artInstance.save();
+	//create an artist account for every artist in the gallery.json file no duplicates and add their art to their artCreated array
+	for(let i = 0; i < jsonData.length; i++){
+		let art = jsonData[i];
+		let artist = await user.findOne({userName: art.Artist});
+		if(artist === null){
+			artist = new user({
+				userName: art.Artist,
+				password: "password",
+				isArtist: true,
+				following: {},
+				artCreated: []
+			});
+			await artist.save();
+		}
+		artist.artCreated.push(art);
+		await artist.save();
 	}
+
+	//now add art to database and artists
+	for(let i = 0; i < jsonData.length; i++){
+		let art = jsonData[i];
+		let artist = await user.findOne({userName: art.Artist});
+		art.isLikedBy = [];
+		art.reviews = {};
+		art = new Art(art);
+		await art.save();
+	}
+	
 }
