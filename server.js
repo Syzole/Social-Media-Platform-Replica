@@ -56,13 +56,13 @@ async function main() {
 
 main().catch(err => console.log(err));
 
-app.use(function(req,res,next){
-	console.log(req.method);
-	console.log(req.url);
-	console.log(req.path);
-	console.log(req.get("Content-Type"));
-	next();
-});
+// app.use(function(req,res,next){
+// 	console.log(req.method);
+// 	console.log(req.url);
+// 	console.log(req.path);
+// 	console.log(req.get("Content-Type"));
+// 	next();
+// });
 
 
 
@@ -183,7 +183,7 @@ app.post('/updateLike', async function(req, res) {
 	}
 });
 
-app.post('/artist/:artist', async function(req, res) {
+app.get('/artist/:artist', async function(req, res) {
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
 		res.redirect('/');
@@ -231,6 +231,31 @@ app.get(`/art/:artwork`, async function(req, res) {
 	}
 });
 
+app.post('/updateReview', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		let response = req.body;
+		console.log(response);
+		let existingArt = await Art.findOne({ Title: response.Title });
+		if (!existingArt) {
+			//art does not existed
+			res.status(401).send();
+		} 
+		else {
+			//art exists, update review by user
+			console.log("Before: "+existingArt.reviews[String(response.user.userName)])
+			existingArt.reviews[String(response.user.userName)] = String(response.reviews);
+			await Art.updateOne({Title: response.Title}, {reviews: existingArt.reviews});
+			console.log("After: "+existingArt.reviews[String(response.user.userName)])
+			console.log(existingArt.reviews)
+			//console.log("sending "+existingArt)
+			res.status(200).json(existingArt);
+		}
+	}
+});
 
 
 

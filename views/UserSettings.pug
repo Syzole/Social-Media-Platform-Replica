@@ -9,6 +9,8 @@ html
         br
         if user.isArtist == true 
             h2= "Your account type is: Artist" 
+            br
+            h2= "Your user name is " + user.userName
             button(onclick=`changeAccountType(${JSON.stringify(user)})`) Change Account Type
             br
             br
@@ -21,6 +23,8 @@ html
             a(href="/notifs", type="text/html") Click here to see your notifications
         else if user.isArtist == false
             h2= "Your account type is: Patron" 
+            br
+            h2= "Your user name is " + user.userName
             button(onclick=`changeAccountType(${JSON.stringify(user)})`) Change Account Type
             br
             br

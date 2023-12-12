@@ -1,35 +1,59 @@
-html
+html 
     head
-        title Art  Page
-        link(rel="stylesheet", href="Artwork.css")
-        script(src="Artwork.js")
-    body(onload=init())
+        title Art Page
+        link(rel="stylesheet", href="/Artwork.css")
+        script(src="/Artwork.js")
+    body
         include Header.pug
-        h1 Artwork Page
-        br
-        if artPiece
-            h2 Artwork Title: #{artPiece.Title}
+        div(id="artwork")
+            h1 Artwork Page
             br
-            img(src=artPiece.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
-            br
-            p Artist: #{artPiece.Artist}
-            br
-            p Year: #{artPiece.Year}
-            br
-            p Category: #{artPiece.Category}
-            br
-            p Medium: #{artPiece.Medium}
-            br
-            p Description: #{artPiece.Description}
-            br
-            p # of Likes: #{artPiece.isLikedBy.length}
-            br
-            p Reviews:
-            if artPiece.Reviews
-                each value, key in artPiece.Reviews
-                    p 
-                        | User: #{key}, Review: #{value}
+            if artPiece
+                h2 Artwork Title: #{artPiece.Title}
+                br
+                img(src=artPiece.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+                br
+                p
+                    | Artist: 
+                    a(href=`/artist/${artPiece.Artist}`, type="text/html")= artPiece.Artist
+                p Year: #{artPiece.Year}
+                br
+                p Category: #{artPiece.Category}
+                br
+                p Medium: #{artPiece.Medium}
+                br
+                p Description: #{artPiece.Description}
+                br
+                p # of Likes: #{artPiece.isLikedBy.length}
+                br
+                p Reviews:
+                div(id="reviews")
+                if artPiece.reviews
+                    each value, key in artPiece.reviews
+                        p 
+                            | User: #{key}, Review: #{value}
+                else
+                    p No reviews available.
+
+                if artPiece.Artist!=user.userName
+                    if artPiece.reviews
+                        if artPiece.reviews[user.userName]
+                            p Edit your review for this art peice.
+                            br
+                            p Your review: #{artPiece.reviews[user.userName]}
+                            br
+                            p Edit your review:
+                            br
+                            input(type="text", id="review", placeholder="Review")
+                            br
+                            button(onclick=`editReview(${JSON.stringify(artPiece)}, ${JSON.stringify(user)})`) Edit Review
+                        else
+                            p Leave a review:
+                            br
+                            input(type="text", id="review", placeholder="Review")
+                            br
+                            button(onclick=`editReview(${JSON.stringify(artPiece)}, ${JSON.stringify(user)})`) Leave Review
+                else
+                    p You cannot leave a review for your own art piece, but feel free to read others!
             else
-                p No reviews available.
-        else
-            p Artwork not found.
+                p Artwork not found.

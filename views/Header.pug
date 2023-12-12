@@ -1,6 +1,6 @@
 html 
-link(rel="stylesheet", href="Header.css")
-script(src="Header.js")
+  link(rel="stylesheet", href="/Header.css")
+  script(src="/Header.js")
 
 if (user.isArtist)
   nav
@@ -14,10 +14,10 @@ if (user.isArtist)
       li
         a(href='/upload', type='text/html') Upload Art
       li 
+        a(href='/notifications', type='text/html') Notifications
+      li 
         input(type='text', id='searchBar', placeholder='Search')
-        //button(type='button', id='searchButton', onclick = searchForStuff()) Search
         
-
 else
   nav
     ul
@@ -27,7 +27,8 @@ else
         a(href='/following', type='text/html') Following Art Work 
       li  
         a(href='/home', type='text/html') Home
+      li 
+        a(href='/notifications', type='text/html') Notifications
       li
         input(type='text', id='searchBar', placeholder='Search')
-        //button(type='button', id='searchButton', onclick = searchForStuff()) Search
         
