@@ -12,6 +12,7 @@ html
         if (searchedArt.length == 0)
             h3 No Results Found
         else
+            //limit it to 10 results per page, with the option to go to the next page or before if applys
             div(id='searchResultsGrid')
                 for art in searchedArt
                     div(id='searchedArt')

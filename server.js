@@ -210,13 +210,14 @@ app.get('/artist/:artist', async function(req, res) {
 	}
 });
 
-app.get('/search/:search', async function(req, res) {
+app.get('/search/:search/:PageNum', async function(req, res) {
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
 		res.redirect('/');
 	} 
 	else {
 		let search = req.params.search;
+		let pageNum = req.params.PageNum;
 		//search db for art contiant title , artist or cat, case insensitive
 		let searchedArt = await Art.find({ $or: [ 
 			{ Title: { $regex: search, $options: 'i' } }, 
@@ -350,6 +351,3 @@ app.post('/addArt', async function(req, res) {
 	await newArt.save();
 	res.status(201).send();
 });
-
-
-

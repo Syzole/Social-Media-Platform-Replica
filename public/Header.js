@@ -2,5 +2,9 @@ function search(){
     let searchBar = document.getElementById("searchBar");
     let search = searchBar.value;
     console.log(search);
-    window.location.href = `/search/${search}`;
+    if(!search){
+        alert("Please enter a search term.");
+        return;
+    }
+    window.location.href = `/search/${search}/0`;
 }
