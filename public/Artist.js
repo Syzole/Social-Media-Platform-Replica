@@ -80,7 +80,7 @@ function toggleFollow(artist, user){
             if (xhttp.status === 200) {
                 console.log("Updated following.");
                 let updatedUser = JSON.parse(xhttp.responseText);
-                updateUI(updatedUser, artist);
+                updateUIFollow(updatedUser, artist);
             } 
             else {
                 alert("Error updating following.");
@@ -91,6 +91,6 @@ function toggleFollow(artist, user){
     xhttp.send(JSON.stringify(user));
 }
 
-function updateUI(artist, user){
+function updateUIFollow(artist, user){
     //TODO: this
 }
