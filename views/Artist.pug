@@ -7,9 +7,10 @@ html
         include Header.pug
         h1= artist.userName + "'s Artwork"
         br
-        if user.following&&user.following.includes(artist.userName)
+        div()
+        if user.following.includes(artist.userName)&&artist.userName!=user.userName
             button(class="unfollow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Unfollow
-        else
+        else if artist.userName!=user.userName
             button(class="follow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Follow
 
         if artist
@@ -32,3 +33,6 @@ html
                                 //nothing
         else
             p Artist not found.
+        
+        h2 WorkShops Hosted By This Artist
+        //TODO: add workshops hosted by this artist

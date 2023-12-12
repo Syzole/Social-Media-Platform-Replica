@@ -7,9 +7,21 @@ const userSchema = new mongoose.Schema({
 	password: String,
 	isArtist: Boolean,
 	following: {
-        type: Object,
-        default: {}
-    }
+        type: Array,
+		default: []
+    },
+	followers: {
+		type: Array,
+		default: []
+	},
+	likedArt: {
+		type: Array,
+		default: []
+	},
+	workshops: {
+		type: Array,
+		default: []
+	}
 });
 
 const artSchema = new mongoose.Schema({
@@ -57,7 +69,10 @@ async function loadData(){
 				userName: art.Artist,
 				password: "password",
 				isArtist: true,
-				following: {}
+				following: [],
+				followers: [],
+				likedArt: [],
+				workshops: []
 			});
 			await artist.save();
 		}

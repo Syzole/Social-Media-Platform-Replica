@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
 		type: Array,
 		default: []
 	},
+	workshops: {
+		type: Array,
+		default: []
+	}
 });
 
 const artSchema = new mongoose.Schema({
@@ -109,6 +113,10 @@ app.post('/users', async function(req, res) {
 	if (!existingUser) {
 		//user does not existed
 		let newUser = new user(response);
+		newUser.following = [];
+		newUser.followers = [];
+		newUser.likedArt = [];
+		newUser.workshops = [];
 		await newUser.save();
 		res.status(201).send();
 	} 
@@ -262,6 +270,28 @@ app.post('/updateReview', async function(req, res) {
 			console.log(existingArt.reviews)
 			//console.log("sending "+existingArt)
 			res.status(200).json(existingArt);
+		}
+	}
+});
+
+app.post('/updateFollowing', async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		let response = req.body;
+		let existingUser = await user.findOne({ userName: response.userName });
+		if (!existingUser) {
+			//user does not existed
+			res.status(401).send();
+		} 
+		else {
+			//user exists, update following by user
+			existingUser.following = response.following;
+			await existingUser.save();
+			//console.log("sending "+existingUser)
+			res.status(200).json(existingUser);
 		}
 	}
 });

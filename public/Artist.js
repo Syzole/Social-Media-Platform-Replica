@@ -62,3 +62,35 @@ function updateUI(art, user){
     }
     container.innerHTML += buttonString;
 }
+
+function toggleFollow(artist, user){
+    if(user.following.includes(artist.userName)){
+        user.following.pop(artist.userName);
+        artist.followers.pop(user.userName);
+    }
+    else{
+        user.following.push(artist.userName);
+        artist.followers.push(user.userName);
+    }
+
+    xhttp.open("POST", "/updateFollowing", false);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4) {
+            if (xhttp.status === 200) {
+                console.log("Updated following.");
+                let updatedUser = JSON.parse(xhttp.responseText);
+                updateUI(updatedUser, artist);
+            } 
+            else {
+                alert("Error updating following.");
+            }
+        }
+    };
+
+    xhttp.send(JSON.stringify(user));
+}
+
+function updateUI(artist, user){
+    //TODO: this
+}
