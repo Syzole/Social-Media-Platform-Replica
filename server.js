@@ -51,8 +51,14 @@ const artSchema = new mongoose.Schema({
 	}
 });
 
+const workshopSchema = new mongoose.Schema({
+	Title: String,
+	Artist: String
+});
+
 let Art = mongoose.model("Art",artSchema);
 let user = mongoose.model("Users",userSchema);
+let Workshop = mongoose.model("Workshop",workshopSchema);
 
 async function main() {
 	await mongoose.connect('mongodb://127.0.0.1:27017/final');
@@ -214,19 +220,26 @@ app.get('/artist/:artist', async function(req, res) {
 	}
 });
 
-app.post('/search/:search', async function(req, res) {
+app.get('/search/:search', async function(req, res) {
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
 		res.redirect('/');
 	} 
 	else {
 		let search = req.params.search;
-		let searchedArt = await Art.find({ $or: [{ Title: search }, { Artist: search }, { Category: search }] });
+		//search db for art contiant title , artist or cat, case insensitive
+		let searchedArt = await Art.find({ $or: [ 
+			{ Title: { $regex: search, $options: 'i' } }, 
+			{ Artist: { $regex: search, $options: 'i' } }, 
+			{ Category: { $regex: search, $options: 'i' } 
+		} ] });
 		let user = req.session.user;
 		if(!search){
+			redirect('/home');
 			res.status(401).send();
 			return;
 		}
+		//console.log(searchedArt);
 		res.render('Search.pug', { searchedArt: searchedArt, user: user });
 	}
 });
@@ -281,18 +294,53 @@ app.post('/updateFollowing', async function(req, res) {
 	} 
 	else {
 		let response = req.body;
-		let existingUser = await user.findOne({ userName: response.userName });
-		if (!existingUser) {
-			//user does not existed
+		let existingUser = await user.findOne({ userName: response.user.userName });
+		let existingArtist = await user.findOne({ userName: response.artist.userName });
+		if (!existingUser&&!existingArtist) {
+			//one dosent exist
 			res.status(401).send();
 		} 
 		else {
 			//user exists, update following by user
-			existingUser.following = response.following;
+			existingUser.following = response.user.following;
+			existingArtist.followers = response.artist.followers;
 			await existingUser.save();
+			await existingArtist.save();
 			//console.log("sending "+existingUser)
-			res.status(200).json(existingUser);
+			req.session.user = existingUser;
+			let data = {
+				user: existingUser,
+				artist: existingArtist
+			}
+			res.status(200).json(data);
 		}
+	}
+});
+
+app.get('/following',async function(req,res){
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		return;
+	} 
+	else {
+		let loggedIn = req.session.user;
+		let following = loggedIn.following;
+		let artists = await user.find({userName: {$in: following}});
+		res.render('Following.pug', { artists: artists, user: loggedIn });
+	}
+});
+
+//come back to this one
+app.get('/notifications',async function(req,res){
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		return;
+	} 
+	else {
+		let loggedIn = req.session.user;
+		let following = loggedIn.following;
+		let artists = await user.find({userName: {$in: following}});
+		res.render('Notifications.pug', { artists: artists, user: loggedIn });
 	}
 });
 

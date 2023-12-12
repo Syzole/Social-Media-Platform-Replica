@@ -34,4 +34,12 @@ body {
   nav a:hover {
     color: #45a049; 
   }
+
+  button {
+    background-color: #525252;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
   

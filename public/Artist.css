@@ -95,6 +95,10 @@ a:hover {
     background-color: #e74c3c;
 }
 
-.follow:hover, .unfollow:hover {
+.follow:hover{
     background-color: #2980b9;
+}
+
+.unfollow:hover{
+    background-color: #551913;
 }

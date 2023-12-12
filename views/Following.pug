@@ -1,0 +1,13 @@
+html
+    head
+        title Following Page
+        link(rel="stylesheet", href="/Following.css")
+        script(src="/Following.js")
+    body
+        include Header.pug
+        h1= user.userName + "'s Following"
+        br
+        div(id="Artist")
+        for artist in artists 
+            p
+                a(href=`/artist/${artist.userName}`, type="text/html")= artist.userName

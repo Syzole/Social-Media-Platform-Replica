@@ -7,11 +7,11 @@ html
         include Header.pug
         h1= artist.userName + "'s Artwork"
         br
-        div()
-        if user.following.includes(artist.userName)&&artist.userName!=user.userName
-            button(class="unfollow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Unfollow
-        else if artist.userName!=user.userName
-            button(class="follow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Follow
+        div(id="buttonDiv")
+            if user.following.includes(artist.userName)&&artist.userName!=user.userName
+                button(class="unfollow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Unfollow
+            else if artist.userName!=user.userName
+                button(class="follow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Follow
 
         if artist
             div(id="artGrid")

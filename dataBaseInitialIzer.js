@@ -42,8 +42,14 @@ const artSchema = new mongoose.Schema({
 	}
 });
 
+const workshopSchema = new mongoose.Schema({
+	Title: String,
+	Artist: String
+});
+
 let Art = mongoose.model("Art",artSchema);
 let user = mongoose.model("Users",userSchema);
+let Workshop = mongoose.model("Workshop",workshopSchema);
 
 async function main() {
 	await mongoose.connect('mongodb://127.0.0.1:27017/final');

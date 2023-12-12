@@ -8,15 +8,18 @@ if (user.isArtist)
       li
         a(href='/userSettings', type='text/html') User Settings
       li
-        a(href='/following', type='text/html') Following Art Work 
+        a(href='/following', type='text/html') Following Artists 
       li  
         a(href='/home', type='text/html') Home
       li
         a(href='/upload', type='text/html') Upload Art
       li 
+        a(href=`/createWorkshop/${user.userName}`, type='text/html') Make a new workshop
+      li 
         a(href='/notifications', type='text/html') Notifications
       li 
         input(type='text', id='searchBar', placeholder='Search')
+        button(type='button', id='searchButton', onclick='search()') Search
         
 else
   nav
@@ -24,11 +27,12 @@ else
       li
         a(href='/userSettings', type='text/html') User Settings
       li
-        a(href='/following', type='text/html') Following Art Work 
+        a(href='/following', type='text/html') Following Artists 
       li  
         a(href='/home', type='text/html') Home
       li 
         a(href='/notifications', type='text/html') Notifications
       li
         input(type='text', id='searchBar', placeholder='Search')
+        button(type='button', id='searchButton', onclick='search()') Search
         

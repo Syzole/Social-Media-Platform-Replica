@@ -1,15 +1,33 @@
 html 
     head 
         title Search Page
-        link(rel="stylesheet", href="Search.css")
-        script(src="Search.js")
+        link(rel="stylesheet", href="/Search.css")
+        script(src="/Search.js")
     body
         include Header.pug
         h1 Search Page
         br
         h2 Search Results
         br
-        div(id='searchResults')
-        br
-        //now in a grid format display all the art works that match the search called searchedArt
+        if (searchedArt.length == 0)
+            h3 No Results Found
+        else
+            div(id='searchResultsGrid')
+                for art in searchedArt
+                    div(id='searchedArt')
+                        div(class=`${art.Title} artInfo`, id=`${art.Title} artInfo`)
+                            h2= art.Title
+                            a(href=`/art/${art.Title}`, type="text/html")
+                                img(src=art.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+                            p
+                                | Artist: 
+                                a(href=`/artist/${art.Artist}`, type="text/html")= art.Artist
+                            if(art.Artist!=user.userName)
+                                if (art.isLikedBy.includes(user.userName))
+                                    button(class="likedButton", onclick=`toggleLikedArt(${JSON.stringify(art)}, ${JSON.stringify(user)})`,id = `${art.Title} button`) Unlike
+                                else
+                                    button(class="unlikedButton", onclick=`toggleLikedArt(${JSON.stringify(art)}, ${JSON.stringify(user)})`,id = `${art.Title} button`) Like
+                            else
+                                //nothing
+
         

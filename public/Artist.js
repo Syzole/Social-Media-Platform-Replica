@@ -79,18 +79,42 @@ function toggleFollow(artist, user){
         if (xhttp.readyState === 4) {
             if (xhttp.status === 200) {
                 console.log("Updated following.");
-                let updatedUser = JSON.parse(xhttp.responseText);
-                updateUIFollow(updatedUser, artist);
+                if(user.following.includes(artist.userName)){
+                    alert("Followed artist.");
+                }
+                else{
+                    alert("Unfollowed artist.");
+                }
+                let updatedData = JSON.parse(xhttp.responseText);
+                updateUIFollow(updatedData.artist, updatedData.user);
             } 
             else {
                 alert("Error updating following.");
             }
         }
     };
-
-    xhttp.send(JSON.stringify(user));
+    let data = {
+        user: user,
+        artist: artist
+    }
+    xhttp.send(JSON.stringify(data));
 }
 
 function updateUIFollow(artist, user){
-    //TODO: this
+    let containerID = `buttonDiv`;
+    let container = document.getElementById(containerID);
+
+    
+    let buttonString;
+
+    if (user.following.includes(artist.userName)) {
+        buttonString = `
+            <button class="unfollow" onclick='toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})'>Unfollow</button>
+        `;
+    } else {
+        buttonString = `
+            <button class="follow" onclick='toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})'>Follow</button>
+        `;
+    }
+    container.innerHTML = buttonString;
 }
