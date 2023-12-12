@@ -158,47 +158,37 @@ app.get('/userSettings', async function(req, res) {
 });
 
 app.post('/changeAccountType', async function(req, res) {
-	if (!req.session.user) {
-		//redirect user to login page, since the user dosent isnt logged in so they would error
-		res.redirect('/');
-	}
+	let response = req.body;
+	let existingUser = await user.findOne({ userName: response.userName });
+	if (!existingUser) {
+		//user does not existed
+		res.status(401).send();
+	} 
 	else {
-		let response = req.body;
-		let existingUser = await user.findOne({ userName: response.userName });
-		if (!existingUser) {
-			//user does not existed
-			res.status(401).send();
-		} 
-		else {
-			//user exists, change the user type
-			existingUser.isArtist = !existingUser.isArtist;
-			await existingUser.save();
-			req.session.user = existingUser;
-			res.status(200).send();
-		}
+		//user exists, change the user type
+		existingUser.isArtist = !existingUser.isArtist;
+		await existingUser.save();
+		req.session.user = existingUser;
+		res.status(200).send();
 	}
+	
 });
 
 app.post('/updateLike', async function(req, res) {
-	if (!req.session.user) {
-		//redirect user to login page, since the user dosent isnt logged in so they would error
-		res.redirect('/');
+	let response = req.body;
+	let existingArt = await Art.findOne({ Title: response.Title });
+	if (!existingArt) {
+		//art does not existed
+		res.status(401).send();
 	} 
 	else {
-		let response = req.body;
-		let existingArt = await Art.findOne({ Title: response.Title });
-		if (!existingArt) {
-			//art does not existed
-			res.status(401).send();
-		} 
-		else {
-			//art exists, update likes by user
-			existingArt.isLikedBy = response.isLikedBy;
-			await existingArt.save();
-			//console.log("sending "+existingArt)
-			res.status(200).json(existingArt);
-		}
+		//art exists, update likes by user
+		existingArt.isLikedBy = response.isLikedBy;
+		await existingArt.save();
+		//console.log("sending "+existingArt)
+		res.status(200).json(existingArt);
 	}
+
 });
 
 app.get('/artist/:artist', async function(req, res) {
@@ -262,60 +252,49 @@ app.get(`/art/:artwork`, async function(req, res) {
 });
 
 app.post('/updateReview', async function(req, res) {
-	if (!req.session.user) {
-		//redirect user to login page, since the user dosent isnt logged in so they would error
-		res.redirect('/');
+	let response = req.body;
+	console.log(response);
+	let existingArt = await Art.findOne({ Title: response.Title });
+	if (!existingArt) {
+		//art does not existed
+		res.status(401).send();
 	} 
 	else {
-		let response = req.body;
-		console.log(response);
-		let existingArt = await Art.findOne({ Title: response.Title });
-		if (!existingArt) {
-			//art does not existed
-			res.status(401).send();
-		} 
-		else {
-			//art exists, update review by user
-			console.log("Before: "+existingArt.reviews[String(response.user.userName)])
-			existingArt.reviews[String(response.user.userName)] = String(response.reviews);
-			await Art.updateOne({Title: response.Title}, {reviews: existingArt.reviews});
-			console.log("After: "+existingArt.reviews[String(response.user.userName)])
-			console.log(existingArt.reviews)
-			//console.log("sending "+existingArt)
-			res.status(200).json(existingArt);
-		}
+		//art exists, update review by user
+		console.log("Before: "+existingArt.reviews[String(response.user.userName)])
+		existingArt.reviews[String(response.user.userName)] = String(response.reviews);
+		await Art.updateOne({Title: response.Title}, {reviews: existingArt.reviews});
+		console.log("After: "+existingArt.reviews[String(response.user.userName)])
+		console.log(existingArt.reviews)
+		//console.log("sending "+existingArt)
+		res.status(200).json(existingArt);
 	}
 });
 
 app.post('/updateFollowing', async function(req, res) {
-	if (!req.session.user) {
-		//redirect user to login page, since the user dosent isnt logged in so they would error
-		res.redirect('/');
-		return;
+	
+	let response = req.body;
+	let existingUser = await user.findOne({ userName: response.user.userName });
+	let existingArtist = await user.findOne({ userName: response.artist.userName });
+	if (!existingUser&&!existingArtist) {
+		//one dosent exist
+		res.status(401).send();
 	} 
 	else {
-		let response = req.body;
-		let existingUser = await user.findOne({ userName: response.user.userName });
-		let existingArtist = await user.findOne({ userName: response.artist.userName });
-		if (!existingUser&&!existingArtist) {
-			//one dosent exist
-			res.status(401).send();
-		} 
-		else {
-			//user exists, update following by user
-			existingUser.following = response.user.following;
-			existingArtist.followers = response.artist.followers;
-			await existingUser.save();
-			await existingArtist.save();
-			//console.log("sending "+existingUser)
-			req.session.user = existingUser;
-			let data = {
-				user: existingUser,
-				artist: existingArtist
-			}
-			res.status(200).json(data);
+		//user exists, update following by user
+		existingUser.following = response.user.following;
+		existingArtist.followers = response.artist.followers;
+		await existingUser.save();
+		await existingArtist.save();
+		//console.log("sending "+existingUser)
+		req.session.user = existingUser;
+		let data = {
+			user: existingUser,
+			artist: existingArtist
 		}
+		res.status(200).json(data);
 	}
+	
 });
 
 app.get('/following',async function(req,res){
@@ -364,8 +343,6 @@ app.get('/upload',async function(req,res){
 });
 
 app.post('/addArt', async function(req, res) {
-	//grab data and add it as art
-	
 	let response = req.body;
 	let newArt = new Art(response);
 	newArt.isLikedBy = [];
