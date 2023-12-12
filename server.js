@@ -291,6 +291,7 @@ app.post('/updateFollowing', async function(req, res) {
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
 		res.redirect('/');
+		return;
 	} 
 	else {
 		let response = req.body;
@@ -320,6 +321,7 @@ app.post('/updateFollowing', async function(req, res) {
 app.get('/following',async function(req,res){
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
 		return;
 	} 
 	else {
@@ -334,6 +336,7 @@ app.get('/following',async function(req,res){
 app.get('/notifications',async function(req,res){
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
 		return;
 	} 
 	else {
@@ -342,6 +345,33 @@ app.get('/notifications',async function(req,res){
 		let artists = await user.find({userName: {$in: following}});
 		res.render('Notifications.pug', { artists: artists, user: loggedIn });
 	}
+});
+
+app.get('/upload',async function(req,res){
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+		return;
+	} 
+	else if(!req.session.user.isArtist){
+		res.redirect('/home');
+		return;
+	}
+	else {
+		let loggedIn = req.session.user;
+		res.render('AddArt.pug', { user: loggedIn });
+	}
+});
+
+app.post('/addArt', async function(req, res) {
+	//grab data and add it as art
+	
+	let response = req.body;
+	let newArt = new Art(response);
+	newArt.isLikedBy = [];
+	newArt.reviews = {};
+	await newArt.save();
+	res.status(201).send();
 });
 
 

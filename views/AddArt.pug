@@ -1,0 +1,30 @@
+html 
+    head
+        title Add Art
+        link(rel="stylesheet", href="/AddArt.css")
+        script(src="/AddArt.js")
+    body
+        include Header.pug
+        h1 Add Art
+        br
+        p Title 
+        input(type="text", id="title")
+        br
+        p Year
+        input(type="text", id="year")
+        br
+        p Category
+        input(type="text", id="category")
+        br
+        p Medium
+        input(type="text", id="medium")
+        br
+        p Description
+        input(type="text", id="description")
+        br
+        p Poster Link 
+        input(type="text", id="poster")
+        br
+        p Submit With the button below 
+        br
+        button(id="submit" ,onclick=`addArt(${JSON.stringify(user)})`) Submit
