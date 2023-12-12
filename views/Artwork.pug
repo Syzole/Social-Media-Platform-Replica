@@ -1,0 +1,35 @@
+html
+    head
+        title Art  Page
+        link(rel="stylesheet", href="Artwork.css")
+        script(src="Artwork.js")
+    body(onload=init())
+        include Header.pug
+        h1 Artwork Page
+        br
+        if artPiece
+            h2 Artwork Title: #{artPiece.Title}
+            br
+            img(src=artPiece.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+            br
+            p Artist: #{artPiece.Artist}
+            br
+            p Year: #{artPiece.Year}
+            br
+            p Category: #{artPiece.Category}
+            br
+            p Medium: #{artPiece.Medium}
+            br
+            p Description: #{artPiece.Description}
+            br
+            p # of Likes: #{artPiece.isLikedBy.length}
+            br
+            p Reviews:
+            if artPiece.Reviews
+                each value, key in artPiece.Reviews
+                    p 
+                        | User: #{key}, Review: #{value}
+            else
+                p No reviews available.
+        else
+            p Artwork not found.

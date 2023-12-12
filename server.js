@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
     following: {
         type: Object,
         default: {}
-    }
+    },
+	likedArt: {
+		type: Array,
+		default: []
+	}
 });
 
 const artSchema = new mongoose.Schema({
@@ -52,13 +56,13 @@ async function main() {
 
 main().catch(err => console.log(err));
 
-// app.use(function(req,res,next){
-// 	console.log(req.method);
-// 	console.log(req.url);
-// 	console.log(req.path);
-// 	console.log(req.get("Content-Type"));
-// 	next();
-// });
+app.use(function(req,res,next){
+	console.log(req.method);
+	console.log(req.url);
+	console.log(req.path);
+	console.log(req.get("Content-Type"));
+	next();
+});
 
 
 
@@ -211,6 +215,21 @@ app.post('/search/:search', async function(req, res) {
 	}
 });
 
+app.get(`/art/:artwork`, async function(req, res) {
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+	} 
+	else {
+		let art = req.params.artwork;
+		let artPiece = await Art.findOne({ Title: art });
+		let user = req.session.user;
+		if(!art){
+			res.status(401).send();
+		}
+		res.render('Artwork.pug', { artPiece: artPiece, user: user });
+	}
+});
 
 
 

@@ -17,8 +17,11 @@ html
             p
               | Artist: 
               a(href=`/artist/${artWork.Artist}`, type="text/html")= artWork.Artist
-            if (artWork.isLikedBy.includes(user.userName))
-              button(class="likedButton", onclick=`toggleLikedArt(${JSON.stringify(artWork)}, ${JSON.stringify(user)})`,id = `${artWork.Title} button`) Unlike
+            if(artWork.Artist!=user.userName)
+              if (artWork.isLikedBy.includes(user.userName))
+                button(class="likedButton", onclick=`toggleLikedArt(${JSON.stringify(artWork)}, ${JSON.stringify(user)})`,id = `${artWork.Title} button`) Unlike
+              else
+                button(class="unlikedButton", onclick=`toggleLikedArt(${JSON.stringify(artWork)}, ${JSON.stringify(user)})`,id = `${artWork.Title} button`) Like
             else
-              button(class="unlikedButton", onclick=`toggleLikedArt(${JSON.stringify(artWork)}, ${JSON.stringify(user)})`,id = `${artWork.Title} button`) Like
-  
+              //nothing
+            
