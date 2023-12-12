@@ -223,7 +223,7 @@ app.get('/search/:search/:PageNum', async function(req, res) {
 			{ Title: { $regex: search, $options: 'i' } }, 
 			{ Artist: { $regex: search, $options: 'i' } }, 
 			{ Category: { $regex: search, $options: 'i' } 
-		} ] });
+		} ] }).skip(pageNum*10).limit(10);
 		let user = req.session.user;
 		if(!search){
 			redirect('/home');
