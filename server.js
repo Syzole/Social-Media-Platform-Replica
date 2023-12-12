@@ -311,7 +311,7 @@ app.get('/following',async function(req,res){
 	}
 });
 
-//come back to this one
+//TODO:come back to this one
 app.get('/notifications',async function(req,res){
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
