@@ -1,0 +1,100 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+#artGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#art {
+    flex: 1;
+    background-color: #000000;
+    padding: 50px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+#art img {
+    width: 100%;
+    min-width: 300px;
+    border-radius: 5px;
+}
+
+#art img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#art p {
+    background-color: transparent;  
+}
+
+h1{
+    color: #ffffff;
+}
+
+h2{
+    color: #ffffff;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.likedButton {
+    background-color: green;
+    color: white;
+}
+  
+.unlikedButton {
+    background-color: red;
+    color: white;
+}
+
+.follow, .unfollow {
+    color: #fff;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; 
+}
+
+.follow {
+    background-color: #3498db;
+}
+
+.unfollow {
+    background-color: #e74c3c;
+}
+
+.follow:hover, .unfollow:hover {
+    background-color: #2980b9;
+}

@@ -1,15 +1,15 @@
 html
   head
     title Home Page
-    link(rel="stylesheet", href="Home.css")
-    script(src="Home.js")
+    link(rel="stylesheet", href="/Home.css")
+    script(src="/Home.js")
   body(onload=`init(${JSON.stringify(allArt)})`)
     include Header.pug
     h1 All Art 
     br
-    div(class="artGrid")
-      for artWork  in allArt 
-        div(class="art")
+    div(id ="artGrid")
+      for artWork in allArt 
+        div(id ="art")
           div(class=`${artWork.Title} artInfo`, id=`${artWork.Title} artInfo`)
             h2= artWork.Title
             a(href=`/art/${artWork.Title}`, type="text/html")

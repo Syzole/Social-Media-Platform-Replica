@@ -9,11 +9,7 @@ const userSchema = new mongoose.Schema({
 	following: {
         type: Object,
         default: {}
-    },
-	artCreated:{
-		type: Array,
-		default: []
-	},
+    }
 });
 
 const artSchema = new mongoose.Schema({
@@ -61,12 +57,10 @@ async function loadData(){
 				userName: art.Artist,
 				password: "password",
 				isArtist: true,
-				following: {},
-				artCreated: []
+				following: {}
 			});
 			await artist.save();
 		}
-		artist.artCreated.push(art);
 		await artist.save();
 	}
 

@@ -12,13 +12,13 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.artGrid {
+#artGrid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.art {
+#art {
     flex: 1;
     background-color: #000000;
     padding: 50px;
@@ -26,18 +26,18 @@ body {
     text-align: left;
 }
 
-.art img {
+#art img {
     width: 100%;
     min-width: 300px;
     border-radius: 5px;
 }
 
-.art img:hover {
+#art img:hover {
     opacity: 0.8;
     cursor: pointer;
 }
 
-.art p {
+#art p {
     background-color: transparent;  
 }
 
@@ -73,9 +73,9 @@ a:hover {
 .likedButton {
     background-color: green;
     color: white;
-  }
+}
   
 .unlikedButton {
     background-color: red;
     color: white;
-  }
+}

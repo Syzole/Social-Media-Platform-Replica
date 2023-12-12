@@ -1,10 +1,34 @@
 html
     head
         title Artist Page
-        link(rel="stylesheet", href="Artist.css")
-        script(src="Artist.js")
+        link(rel="stylesheet", href="/Artist.css")
+        script(src="/Artist.js")
     body
         include Header.pug
-        h1 Artist Page
+        h1= artist.userName + "'s Artwork"
         br
-        h2 Artist Name
+        if user.following&&user.following.includes(artist.userName)
+            button(class="unfollow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Unfollow
+        else
+            button(class="follow", onclick=`toggleFollow(${JSON.stringify(artist)}, ${JSON.stringify(user)})`,id = `${artist.userName} button`) Follow
+
+        if artist
+            div(id="artGrid")
+                each artWork in allArtToArtist
+                    div(id="art")
+                        div(class=`${artWork.Title} artInfo`, id=`${artWork.Title} artInfo`)
+                            h2= artWork.Title
+                            a(href=`/art/${artWork.Title}`, type="text/html")
+                                img(src=artWork.Poster, alt="Oops, the art poster is acting a bit odd, but You can right click to see it still!")
+                            p
+                                | Artist: 
+                                a(href=`/artist/${artWork.Artist}`, type="text/html")= artWork.Artist
+                            if(artWork.Artist!=user.userName)
+                                if (artWork.isLikedBy.includes(user.userName))
+                                    button(class="likedButton", onclick=`toggleLikedArt(${JSON.stringify(artWork)}, ${JSON.stringify(user)})`,id = `${artWork.Title} button`) Unlike
+                                else
+                                    button(class="unlikedButton", onclick=`toggleLikedArt(${JSON.stringify(artWork)}, ${JSON.stringify(user)})`,id = `${artWork.Title} button`) Like
+                            else
+                                //nothing
+        else
+            p Artist not found.

@@ -16,13 +16,17 @@ const userSchema = new mongoose.Schema({
     password: String,
 	isArtist: Boolean,
     following: {
-        type: Object,
-        default: {}
+        type: Array,
+		default: []
     },
+	followers: {
+		type: Array,
+		default: []
+	},
 	likedArt: {
 		type: Array,
 		default: []
-	}
+	},
 });
 
 const artSchema = new mongoose.Schema({
@@ -187,15 +191,18 @@ app.get('/artist/:artist', async function(req, res) {
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
 		res.redirect('/');
+		return;
 	} 
 	else {
-		let artist = req.params.artist;
-		let allArtToArtist = await Art.find({ Artist: artist });
-		let user = req.session.user;
+		let artistName = req.params.artist;
+		let artist = await user.findOne({ userName: artistName });
 		if(!artist){
 			res.status(401).send();
+			return;
 		}
-		res.render('Artist.pug', { allArtToArtist: allArtToArtist, user: user });
+		let allArtToArtist = await Art.find({ Artist: artistName });
+		let loggedIn = req.session.user;
+		res.render('Artist.pug', { allArtToArtist: allArtToArtist, user: loggedIn, artist: artist });
 	}
 });
 
@@ -210,6 +217,7 @@ app.post('/search/:search', async function(req, res) {
 		let user = req.session.user;
 		if(!search){
 			res.status(401).send();
+			return;
 		}
 		res.render('Search.pug', { searchedArt: searchedArt, user: user });
 	}
@@ -226,6 +234,7 @@ app.get(`/art/:artwork`, async function(req, res) {
 		let user = req.session.user;
 		if(!art){
 			res.status(401).send();
+			return;
 		}
 		res.render('Artwork.pug', { artPiece: artPiece, user: user });
 	}
