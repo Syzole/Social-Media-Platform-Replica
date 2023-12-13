@@ -343,6 +343,7 @@ app.get('/notifications',async function(req,res){
 	} 
 	else {
 		req.session.user = await user.findOne({ userName: req.session.user.userName });
+		console.log(req.session.user.notifications);
 		let loggedIn = req.session.user;
 		res.render('Notifications.pug', {user: loggedIn });
 	}
@@ -359,6 +360,7 @@ app.get('/upload',async function(req,res){
 		return;
 	}
 	else {
+		req.session.user = await user.findOne({ userName: req.session.user.userName });
 		let loggedIn = req.session.user;
 		res.render('AddArt.pug', { user: loggedIn });
 	}
@@ -393,6 +395,7 @@ app.get('/createWorkshop',async function(req,res){
 		return;
 	}
 	else {
+		req.session.user = await user.findOne({ userName: req.session.user.userName });
 		let loggedIn = req.session.user;
 		res.render('AddWorkshop.pug', { user: loggedIn });
 	}
@@ -466,10 +469,8 @@ app.get('/interactions',async function(req,res){
 });
 
 async function notifyUser(userName, notification){
-	console.log(userName);
+
 	let existingUser = await user.findOne({ userName: userName });
-	console.log(existingUser);
-	console.log(existingUser.notifications);
 	existingUser.notifications.push(notification);
-	existingUser.save();
+	await existingUser.save();
 }
