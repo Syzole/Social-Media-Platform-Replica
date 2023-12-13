@@ -1,9 +1,4 @@
 let xhttp = new XMLHttpRequest();
-let allArt;
-function init(allArtJSON) {
-    allArt = allArtJSON;
-    console.log(allArt);
-}
 
 function toggleLikedArt(art,user){
     
