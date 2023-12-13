@@ -1,0 +1,13 @@
+html 
+    head 
+        title Notifications 
+    body
+        include Header.pug
+        h1 Notifications
+        div(id="notificationDiv")
+            if user.notifications.length === 0
+                h2 No notifications yet!
+            else
+                for notification in user.notifications
+                    div(class="notification")
+                        p= notification

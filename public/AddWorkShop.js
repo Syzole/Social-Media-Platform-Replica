@@ -26,7 +26,7 @@ function addWorkShop(user){
 
     let data = {
         Title: title,
-        Artist: user.userName,
+        Artist: user,
         Description: description
     }
 

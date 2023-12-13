@@ -26,6 +26,13 @@ html
                 br
                 p # of Likes: #{artPiece.isLikedBy.length}
                 br
+                if artPiece.Artist!=user.userName
+                    if (artPiece.isLikedBy.includes(user.userName))
+                        button(class="likedButton", onclick=`toggleLikedArt(${JSON.stringify(artPiece)}, ${JSON.stringify(user)})`,id = `${artPiece.Title} button`) Unlike
+                    else
+                        button(class="unlikedButton", onclick=`toggleLikedArt(${JSON.stringify(artPiece)}, ${JSON.stringify(user)})`,id = `${artPiece.Title} button`) Like
+                else
+                    //nothing
                 p Reviews:
                 div(id="reviews")
                 if artPiece.reviews

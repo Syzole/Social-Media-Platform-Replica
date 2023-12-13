@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
 const artSchema = new mongoose.Schema({
 	Title: String,
 	Artist: String,
-	Year: Number,
+	Year: {
+		type: Number,
+		required: true
+	},
 	Category: String,
 	Medium: String,
 	Description: String,

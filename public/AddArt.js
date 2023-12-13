@@ -39,6 +39,10 @@ function addArt(user){
                 }
             }
         };
-        xhttp.send(JSON.stringify(art));
+        let data = {
+            art: art,
+            user: user
+        };
+        xhttp.send(JSON.stringify(data));
     }
 }

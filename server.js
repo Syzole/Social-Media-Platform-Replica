@@ -36,7 +36,10 @@ const userSchema = new mongoose.Schema({
 const artSchema = new mongoose.Schema({
 	Title: String,
 	Artist: String,
-	Year: Number,
+	Year: {
+		type: Number,
+		required: true
+	},
 	Category: String,
 	Medium: String,
 	Description: String,
@@ -327,10 +330,9 @@ app.get('/notifications',async function(req,res){
 		return;
 	} 
 	else {
+		req.session.user = await user.findOne({ userName: req.session.user.userName });
 		let loggedIn = req.session.user;
-		let following = loggedIn.following;
-		let artists = await user.find({userName: {$in: following}});
-		res.render('Notifications.pug', { artists: artists, user: loggedIn });
+		res.render('Notifications.pug', {user: loggedIn });
 	}
 });
 
@@ -352,9 +354,18 @@ app.get('/upload',async function(req,res){
 
 app.post('/addArt', async function(req, res) {
 	let response = req.body;
-	let newArt = new Art(response);
+	let newArt = new Art(response.art);
+	let artist = response.user;
+	
+	artist.followers.forEach(user => {
+		notifyUser(user, 'The artist ' + artist.userName + ' has added a new piece of art titled ' + newArt.Title + '.' );
+	});
+
 	newArt.isLikedBy = [];
 	newArt.reviews = {};
+
+	//save the updated user data to the database
+	
 	await newArt.save();
 	res.status(201).send();
 });
@@ -377,7 +388,19 @@ app.get('/createWorkshop',async function(req,res){
 
 app.post('/addWorkShop', async function(req, res) {
 	let response = req.body;
-	let newWorkshop = new Workshop(response);
+	let data = {
+		Title: response.Title,
+		Artist: response.Artist.userName,
+		Description: response.Description
+	}
+
+	response.Artist.followers.forEach(user => {
+		notifyUser(user, 'The artist ' + data.Artist + ' has added a new workshop titled ' + data.Title + '.' );
+	});
+
+	console.log(data);
+
+	let newWorkshop = new Workshop(data);
 	newWorkshop.Enrolled = [];
 	await newWorkshop.save();
 	res.status(201).send();
@@ -415,3 +438,12 @@ app.post('/updateEnrolled', async function(req, res) {
 		res.status(200).json(existingWorkshop);
 	}
 });
+
+async function notifyUser(userName, notification){
+	console.log(userName);
+	let existingUser = await user.findOne({ userName: userName });
+	console.log(existingUser);
+	console.log(existingUser.notifications);
+	existingUser.notifications.push(notification);
+	existingUser.save();
+}
