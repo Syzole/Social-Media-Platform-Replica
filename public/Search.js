@@ -44,6 +44,5 @@ function toggleLikedArt(art,user){
             }
         }
     };
-    //TODO: update user liked art in database
     xhttp.send(JSON.stringify(art));
 }
