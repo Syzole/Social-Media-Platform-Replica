@@ -135,6 +135,11 @@ app.post('/users', async function(req, res) {
 	}
 });
 
+app.get('/logout', function(req, res) {
+	req.session.destroy();
+	res.redirect('/');
+});
+
 app.get('/home', async function(req, res) {
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error

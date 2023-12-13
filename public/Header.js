@@ -8,3 +8,7 @@ function search(){
     }
     window.location.href = `/search/${search}/0`;
 }
+
+function logout(){
+    window.location.href = "/logout";
+}

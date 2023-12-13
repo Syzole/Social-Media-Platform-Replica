@@ -18,6 +18,8 @@ if (user.isArtist)
       li 
         a(href='/notifications', type='text/html') Notifications
       li 
+        button(type='button', id='logoutButton', onclick='logout()') Logout
+      li 
         input(type='text', id='searchBar', placeholder='Search')
         button(type='button', id='searchButton', onclick='search()') Search
         
@@ -32,6 +34,8 @@ else
         a(href='/home', type='text/html') Home
       li 
         a(href='/notifications', type='text/html') Notifications
+      li 
+        button(type='button', id='logoutButton', onclick='logout()') Logout
       li
         input(type='text', id='searchBar', placeholder='Search')
         button(type='button', id='searchButton', onclick='search()') Search
