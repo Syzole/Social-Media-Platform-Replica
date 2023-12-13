@@ -102,3 +102,7 @@ a:hover {
 .unfollow:hover{
     background-color: #551913;
 }
+
+#workshopDiv{
+    padding-bottom: 100px;
+}

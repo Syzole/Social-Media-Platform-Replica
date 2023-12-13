@@ -2,8 +2,21 @@ html
     head 
         title New Workshop 
         script(src='/Workshop.js')
-    body
+    body(onload=`init(${JSON.stringify(workshop)})`)
         include Header.pug
         h1= workshop.Title
         h2 Hosted by: #{workshop.Artist}
         h2 Description: #{workshop.Description}
+        br
+        if workshop.Enrolled.length > 0
+            h2 Other People Enrolled:
+            ul
+                each user in workshop.Enrolled
+                    li= user
+        else
+            h2 No one else has enrolled yet, but you can be the first!
+
+        if workshop.Enrolled.includes(user.userName)
+            p You are already enrolled in this workshop!
+        else
+            button(onclick=`enroll(${JSON.stringify(user)},${JSON.stringify(workshop)})`) Enroll in this workshop

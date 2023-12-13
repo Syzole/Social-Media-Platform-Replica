@@ -210,8 +210,10 @@ app.get('/artist/:artist', async function(req, res) {
 			return;
 		}
 		let allArtToArtist = await Art.find({ Artist: artistName });
+		let workshopToArtist = await Workshop.find({ Artist: artistName });
+		//console.log(workshopToArtist);
 		let loggedIn = req.session.user;
-		res.render('Artist.pug', { allArtToArtist: allArtToArtist, user: loggedIn, artist: artist });
+		res.render('Artist.pug', { allArtToArtist: allArtToArtist, user: loggedIn, artist: artist, workshopToArtist: workshopToArtist });
 	}
 });
 
@@ -396,5 +398,20 @@ app.get('/workshop/:workshopName',async function(req,res){
 		}
 		let user = req.session.user;
 		res.render('Workshop.pug', { workshop: workshop, user: user });
+	}
+});
+
+app.post('/updateEnrolled', async function(req, res) {
+	let response = req.body;
+	let existingWorkshop = await Workshop.findOne({ Title: response.Title });
+	if (!existingWorkshop) {
+		//it does not existed
+		res.status(401).send();
+	} 
+	else {
+		existingWorkshop.Enrolled = response.Enrolled;
+		await existingWorkshop.save();
+		//console.log("sending "+existingArt)
+		res.status(200).json(existingWorkshop);
 	}
 });

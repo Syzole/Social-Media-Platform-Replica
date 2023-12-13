@@ -34,5 +34,11 @@ html
         else
             p Artist not found.
         
-        h2 WorkShops Hosted By This Artist
-        //TODO: add workshops hosted by this artist
+        div(id="workshopDiv")    
+            if workshopToArtist.length === 0
+                h2 No workshops hosted by this artist yet!
+
+            else
+                h2 Workshops hosted by this artist:
+                for workshop in workshopToArtist 
+                    a(href=`/workshop/${workshop.Title}`, type="text/html")= workshop.Title

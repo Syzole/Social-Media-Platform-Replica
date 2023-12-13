@@ -12,7 +12,7 @@ function editReview(art, user) {
             if (xhttp.status === 200) {
                 alert("Review successfully updated!");
                 //refresh page to make things easier
-                window.location.href = "/art/" + art.Title;
+                window.location.reload();
             } 
             else {
                 alert("Error updating review.");
