@@ -83,7 +83,6 @@ main().catch(err => console.log(err));
 // });
 
 
-
 app.get('/', function(req, res) {
     res.render('Login.pug');
 });
@@ -472,6 +471,11 @@ app.get('/interactions',async function(req,res){
 		res.render('Interactions.pug', { user: loggedIn, likedArt: likedArt, reviewArt: reviewArt });
 	}
 });
+
+app.all('*', (req, res) => {
+	res.status(404).send('Page not found');
+});
+  
 
 async function notifyUser(userName, notification){
 
