@@ -473,7 +473,7 @@ app.get('/interactions',async function(req,res){
 });
 
 app.all('*', (req, res) => {
-	res.status(404).send('Page not found');
+	res.redirect('/home');
 });
   
 
