@@ -18,7 +18,8 @@ html
                     a(href=`/artist/${artPiece.Artist}`, type="text/html")= artPiece.Artist
                 p Year: #{artPiece.Year}
                 br
-                p Category: #{artPiece.Category}
+                a(href=`/search/${artPiece.Category}/0`, type="text/html") 
+                    p Category: #{artPiece.Category}
                 br
                 p Medium: #{artPiece.Medium}
                 br
