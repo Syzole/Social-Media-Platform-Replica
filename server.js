@@ -23,10 +23,6 @@ const userSchema = new mongoose.Schema({
 		type: Array,
 		default: []
 	},
-	likedArt: {
-		type: Array,
-		default: []
-	},
 	notifications: {
 		type: Array,
 		default: []
@@ -282,6 +278,22 @@ app.post('/updateReview', async function(req, res) {
 	}
 });
 
+app.post('/deleteReview', async function(req, res) {
+	let response = req.body;
+	let existingArt = await Art.findOne({ Title: response.Title });
+	if (!existingArt) {
+		//art does not existed
+		res.status(401).send();
+	} 
+	else {
+		//art exists, update review by user
+		delete existingArt.reviews[String(response.user.userName)];
+		await Art.updateOne({Title: response.Title}, {reviews: existingArt.reviews});
+		//console.log("sending "+existingArt)
+		res.status(200).json(existingArt);
+	}
+});
+
 app.post('/updateFollowing', async function(req, res) {
 	
 	let response = req.body;
@@ -322,7 +334,7 @@ app.get('/following',async function(req,res){
 	}
 });
 
-//TODO:come back to this one
+
 app.get('/notifications',async function(req,res){
 	if (!req.session.user) {
 		//redirect user to login page, since the user dosent isnt logged in so they would error
@@ -436,6 +448,20 @@ app.post('/updateEnrolled', async function(req, res) {
 		await existingWorkshop.save();
 		//console.log("sending "+existingArt)
 		res.status(200).json(existingWorkshop);
+	}
+});
+
+app.get('/interactions',async function(req,res){
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+		return;
+	} 
+	else {
+		let loggedIn = req.session.user;
+		let likedArt = await Art.find({isLikedBy: {$in: [loggedIn.userName]}});
+		let reviewArt = await Art.find().where('reviews.'+loggedIn.userName).ne(null);
+		res.render('Interactions.pug', { user: loggedIn, likedArt: likedArt, reviewArt: reviewArt });
 	}
 });
 

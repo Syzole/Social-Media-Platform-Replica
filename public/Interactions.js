@@ -1,7 +1,29 @@
 let xhttp = new XMLHttpRequest();
 
+function unlikeArt(art, user){
+    art.isLikedBy.pop(user.userName);
+    xhttp.open("POST", "/updateLike", false);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4) {
+            if (xhttp.status === 200) {
+                console.log("Updated like.");
+
+                alert("Unliked art.");
+
+                window.location.reload();
+            } 
+            else {
+                alert("Error updating like.");
+            }
+        }
+    };
+    xhttp.send(JSON.stringify(art));
+}
+
 function editReview(art, user) {
-    let review = document.getElementById("review").value;
+    let id = `${art.Title} review`;
+    let review = document.getElementById(id).value;
     console.log(review);
 
     xhttp.open("POST", "/updateReview", false);
@@ -27,37 +49,6 @@ function editReview(art, user) {
     console.log(data);
 
     xhttp.send(JSON.stringify(data));
-}
-
-function toggleLikedArt(art,user){
-    
-    if(art.isLikedBy.includes(user.userName)){
-        art.isLikedBy.pop(user.userName);
-    }
-    else{
-        art.isLikedBy.push(user.userName);
-    }
-    xhttp.open("POST", "/updateLike", false);
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState === 4) {
-            if (xhttp.status === 200) {
-                console.log("Updated like.");
-
-                if(art.isLikedBy.includes(user.userName)){
-                    alert("Liked art.");
-                }
-                else{
-                    alert("Unliked art.");
-                }
-                window.location.reload();
-            } 
-            else {
-                alert("Error updating like.");
-            }
-        }
-    };
-    xhttp.send(JSON.stringify(art));
 }
 
 function deleteReview(art, user) {

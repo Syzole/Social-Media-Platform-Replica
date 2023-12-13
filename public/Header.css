@@ -4,8 +4,8 @@ body {
     padding: 0;
     background-color: #1a1a1a;
     color: #ffffff; 
-    /* align-items: center;
-    justify-content: center; */
+    align-items: center;
+    justify-content: center;
   }
   
   header {

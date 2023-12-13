@@ -1,0 +1,39 @@
+html 
+    head 
+        title Manage Interactions
+        link(rel="stylesheet", href="/Interactions.css")
+        script(src="/Interactions.js")
+    body
+        include Header.pug
+        h1 Manage Likes 
+        br
+        h2 Here you can see all the art you have liked
+        for art in likedArt 
+            h2= art.title
+            br
+            a(href=`/art/${art.Title}`, type="text/html")
+                img(src=art.Poster)
+            br
+            button(onclick=`unlikeArt(${JSON.stringify(art)},${JSON.stringify(user)})`) Unlike Art
+            br
+            br
+
+        h2 Here you can see all the art you have reviewed and edit your review
+        for art in reviewArt 
+            h2= art.title
+            br
+            a(href=`/art/${art.Title}`, type="text/html")
+                img(src=art.Poster)
+            br
+            p Your review 
+            input(type="text", id=`${art.Title} review`, value=`${art.reviews[user.userName]}`)
+            br
+            br
+            button(onclick=`editReview(${JSON.stringify(art)},${JSON.stringify(user)})`) Edit Review
+            br
+            button(onclick=`deleteReview(${JSON.stringify(art)},${JSON.stringify(user)})`) Delete Review
+            br
+            br
+            br
+            br
+

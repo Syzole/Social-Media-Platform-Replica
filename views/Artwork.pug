@@ -54,6 +54,8 @@ html
                             input(type="text", id="review", placeholder="Review")
                             br
                             button(onclick=`editReview(${JSON.stringify(artPiece)}, ${JSON.stringify(user)})`) Edit Review
+                            br
+                            button(onclick=`deleteReview(${JSON.stringify(artPiece)}, ${JSON.stringify(user)})`) Delete Review
                         else
                             p Leave a review:
                             br
