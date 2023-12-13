@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
 		type: Array,
 		default: []
 	},
-	workshops: {
+	notifications: {
 		type: Array,
 		default: []
 	}
@@ -53,7 +53,12 @@ const artSchema = new mongoose.Schema({
 
 const workshopSchema = new mongoose.Schema({
 	Title: String,
-	Artist: String
+	Artist: String,
+	Description: String,
+	Enrolled: {
+		type: Array,
+		default: []
+	}
 });
 
 let Art = mongoose.model("Art",artSchema);
@@ -231,7 +236,7 @@ app.get('/search/:search/:PageNum', async function(req, res) {
 			return;
 		}
 		//console.log(searchedArt);
-		res.render('Search.pug', { searchedArt: searchedArt, user: user });
+		res.render('Search.pug', { searchedArt: searchedArt, user: user,pageNum: pageNum, search: search});
 	}
 });
 
@@ -350,4 +355,46 @@ app.post('/addArt', async function(req, res) {
 	newArt.reviews = {};
 	await newArt.save();
 	res.status(201).send();
+});
+
+app.get('/createWorkshop',async function(req,res){
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+		return;
+	} 
+	else if(!req.session.user.isArtist){
+		res.redirect('/home');
+		return;
+	}
+	else {
+		let loggedIn = req.session.user;
+		res.render('AddWorkshop.pug', { user: loggedIn });
+	}
+});
+
+app.post('/addWorkShop', async function(req, res) {
+	let response = req.body;
+	let newWorkshop = new Workshop(response);
+	newWorkshop.Enrolled = [];
+	await newWorkshop.save();
+	res.status(201).send();
+});
+
+app.get('/workshop/:workshopName',async function(req,res){
+	if (!req.session.user) {
+		//redirect user to login page, since the user dosent isnt logged in so they would error
+		res.redirect('/');
+		return;
+	} 
+	else {
+		let workshopName = req.params.workshopName;
+		let workshop = await Workshop.findOne({ Title: workshopName });
+		if(!workshop){
+			res.status(401).send();
+			return;
+		}
+		let user = req.session.user;
+		res.render('Workshop.pug', { workshop: workshop, user: user });
+	}
 });

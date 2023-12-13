@@ -1,0 +1,19 @@
+html 
+    head 
+        title New Workshop 
+        script(src='/AddWorkShop.js')
+    body
+        include Header.pug
+        h1 New Workshop
+        h2 Enter the details of the new workshop Below in the text boxes making sure to fill in all the fields
+        br
+        p Workshop Name:
+        input(type='text', id='title')
+        br
+        p Workshop Description:
+        input(type='text', id='description')
+        br
+        p Below use the button to create a workshop 
+        br
+        button(onclick=`addWorkShop(${JSON.stringify(user)})`) Create Workshop
+        

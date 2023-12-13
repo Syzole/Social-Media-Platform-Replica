@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 		type: Array,
 		default: []
 	},
-	workshops: {
+	notifications: {
 		type: Array,
 		default: []
 	}
@@ -44,8 +44,14 @@ const artSchema = new mongoose.Schema({
 
 const workshopSchema = new mongoose.Schema({
 	Title: String,
-	Artist: String
+	Artist: String,
+	Description: String,
+	Enrolled: {
+		type: Array,
+		default: []
+	}
 });
+
 
 let Art = mongoose.model("Art",artSchema);
 let user = mongoose.model("Users",userSchema);

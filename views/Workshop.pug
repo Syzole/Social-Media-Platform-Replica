@@ -1,0 +1,9 @@
+html 
+    head 
+        title New Workshop 
+        script(src='/Workshop.js')
+    body
+        include Header.pug
+        h1= workshop.Title
+        h2 Hosted by: #{workshop.Artist}
+        h2 Description: #{workshop.Description}
