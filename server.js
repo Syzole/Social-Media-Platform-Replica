@@ -65,7 +65,7 @@ let user = mongoose.model("Users",userSchema);
 let Workshop = mongoose.model("Workshop",workshopSchema);
 
 async function main() {
-	await mongoose.connect('mongodb://127.0.0.1:27017/final');
+	await mongoose.connect("mongodb://127.0.0.1:27017/SocialMediaDB");
 	console.log('Connected to MongoDB');
 
 	app.listen(3000);
